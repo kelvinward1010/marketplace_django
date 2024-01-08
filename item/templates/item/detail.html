@@ -1,17 +1,48 @@
 {% extends 'core/base.html' %}
 
 {% block titlepage %} 
-    Welcome
+    {{item.name}}
 {% endblock %}
 
 {% block content %}
+    <div class="grid grid-cols-5 gap-6">
+        <div class="col-span-3">
+            <img src="{{item.image.url}}" alt="img" class="rounded-xl">
+        </div>
+
+        <div class="col-span-2 p-6 bg-gray-100 rounded-xl">
+            <h1 class="mb-6 text-3xl">
+                {{ item.name }}
+            </h1>
+            <p class="text-gray-500">
+                <strong>Price: {{ item.price }}</strong>
+            </p>
+            <p class="text-gray-500">
+                <strong>Seller: {{ item.created_by.username }}</strong>
+            </p>
+
+            {% if item.description %}
+                <p class="text-gray-700">
+                    <strong class="text-gray-500">
+                        Description:
+                    </strong>
+                    {{ item.description }}
+                </p>
+            {% endif %}
+
+            <a href="#" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:text-teal-700">
+                Contact Seller
+            </a>
+        </div>
+    </div>
+
     <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
         <div class="mb-12 text-2xl text-center">
-            Newest Items
+            Related Items
         </div>
 
         <div class="grid grid-cols-3 gap-3">
-            {% for item in items %}
+            {% for item in related_items %}
                 <div>
                     <a href="{% url 'item:detail' item.id %}">
                         <div>
@@ -30,27 +61,6 @@
                             </h2>
                             <p class="text-gray-500">
                                 Price: {{item.price}}
-                            </p>
-                        </div>
-                    </a>
-                </div>
-            {% endfor  %}
-        </div>
-    </div>
-    <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
-        <div class="mb-12 text-2xl text-center">
-            Categories
-        </div>
-        <div class="grid grid-cols-3 gap-3">
-            {% for category in categories %}
-                <div>
-                    <a href="">
-                        <div class="p-6 bg-white rounded-b-xl">
-                            <h2 class="text-2xl">
-                                {{category.name}}
-                            </h2>
-                            <p class="text-gray-500">
-                                {{category.items.count}} items
                             </p>
                         </div>
                     </a>
